@@ -18,17 +18,25 @@ const PORT = process.env.PORT || 3000;
 
 const DIRNAME = path.resolve();
 
-// default middleware for any mern project
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.json());
 app.use(cookieParser());
+
+
 const corsOptions = {
-    origin: "https://foodora-v1.vercel.app/",
+    origin: (origin, callback) => {
+        const allowedOrigins = ["https://foodora-v1.vercel.app", "https://foodora-v1.vercel.app/", "http://localhost:5173"];
+        if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-}
+};
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
