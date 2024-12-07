@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 
 const corsOptions = {
-    origin: (origin, callback) => {
+    origin: (origin: any, callback: any) => {
         const allowedOrigins = ["https://foodora-v1.vercel.app", "https://foodora-v1.vercel.app/", "http://localhost:5173"];
         if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
             callback(null, true);
