@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.json());
 app.use(cookieParser());
 const corsOptions = {
-    origin: "https://foodora-cx0a.onrender.com/",
+    origin: "https://foodora-v1.vercel.app/",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
