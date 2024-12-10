@@ -49,7 +49,7 @@ const Navbar = () => {
   const { isAuthenticated, user, logout } = useUserStore();
   const { cart } = useCartStore();
   const { theme, setTheme } = useThemeStore();
-  type LanguageKey = keyof typeof languages;  
+  type LanguageKey = keyof typeof languages;
   const [language, setLanguage] = useState<LanguageKey>("de");
   const { t, i18n } = useTranslation();
 
@@ -112,7 +112,7 @@ const Navbar = () => {
                 <Menubar>
                   <MenubarMenu>
                     <MenubarTrigger>
-                      {languages[language]} 
+                      {languages[language]}
                     </MenubarTrigger>
                     <MenubarContent>
                       {Object.entries(languages).map(([key, value]) => (
@@ -190,7 +190,7 @@ const Navbar = () => {
 export default Navbar;
 
 const MobileNavbar = () => {
-  const { user, logout , isAuthenticated } = useUserStore();
+  const { user, logout, isAuthenticated } = useUserStore();
   const { theme, setTheme } = useThemeStore();
   const { t, i18n } = useTranslation();
   type LanguageKey = keyof typeof languages;
@@ -256,20 +256,40 @@ const MobileNavbar = () => {
               </MenubarMenu>
             </Menubar>
           </div>
-          <Link
+          {
+            isAuthenticated ? (
+              <>
+                <Link
+                  to="/profile"
+                  className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
+                >
+                  <User />
+                  <span>{t("profile")}</span>
+                </Link>
+                <Link
+                  to="/order/status"
+                  className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
+                >
+                  <HandPlatter />
+                  <span>{t("order")}</span>
+                </Link>
+              </>
+            ) : null
+          }
+          {/* <Link
             to="/profile"
             className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
           >
             <User />
             <span>{t("profile")}</span>
-          </Link>
-          <Link
+          </Link> */}
+          {/* <Link
             to="/order/status"
             className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
           >
             <HandPlatter />
             <span>{t("order")}</span>
-          </Link>
+          </Link> */}
           <Link
             to="/cart"
             className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
@@ -277,7 +297,7 @@ const MobileNavbar = () => {
             <ShoppingCart />
             <span>{t("cart")} (0)</span>
           </Link>
-          {user?.admin && (
+          {user?.admin && isAuthenticated ? (
             <>
               <Link
                 to="/admin/menu"
@@ -301,7 +321,7 @@ const MobileNavbar = () => {
                 <span>{t("restaurant orders")}</span>
               </Link>
             </>
-          )}
+          ): ""}
         </SheetDescription>
         <SheetFooter className="flex flex-col gap-4">
           <div className="flex flex-row items-center gap-2">
